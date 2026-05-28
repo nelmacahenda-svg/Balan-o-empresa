@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Balanço Patrimonial</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="login-container" class="card">
+        <h2>Painel do Administrador</h2>
+        <p>Insira as credenciais para acessar o sistema.</p>
+        <form id="login-form">
+            <div class="input-group">
+                <label for="username">Usuário:</label>
+                <input type="text" id="username" required placeholder="Ex: admin">
+            </div>
+            <div class="input-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn">Entrar</button>
+            <p id="login-error" class="error-msg"></p>
+        </form>
+    </div>
+
+    <div id="app-container" class="card hidden">
+        <div class="header-app">
+            <h2>Balanço Patrimonial</h2>
+            <button id="btn-logout" class="btn-secondary">Sair</button>
+        </div>
+
+        <div class="grid-form">
+            <div class="box-finance">
+                <h3>Ativos (Bens e Direitos)</h3>
+                <div class="input-group">
+                    <label>Caixa / Equivalentes:</label>
+                    <input type="number" id="ativo-circulante" value="0" min="0">
+                </div>
+                <div class="input-group">
+                    <label>Imobilizado (Prédios, Equipamentos):</label>
+                    <input type="number" id="ativo-nao-circulante" value="0" min="0">
+                </div>
+            </div>
+
+            <div class="box-finance">
+                <h3>Passivos & PL (Obrigações e Capital)</h3>
+                <div class="input-group">
+                    <label>Obrigações a Curto Prazo (Fornecedores):</label>
+                    <input type="number" id="passivo-circulante" value="0" min="0">
+                </div>
+                <div class="input-group">
+                    <label>Obrigações a Longo Prazo (Empréstimos):</label>
+                    <input type="number" id="passivo-nao-circulante" value="0" min="0">
+                </div>
+                <div class="input-group">
+                    <label>Patrimônio Líquido (Capital Social):</label>
+                    <input type="number" id="patrimonio-liquido" value="0" min="0">
+                </div>
+            </div>
+        </div>
+
+        <button id="btn-calcular" class="btn">Calcular Balanço</button>
+
+        <div id="resultado-balanco" class="resultado hidden">
+            <h3>Resultado da Análise</h3>
+            <div class="tabela-resumo">
+                <p><strong>Total de Ativos:</strong> R$ <span id="res-ativos">0.00</span></p>
+                <p><strong>Total de Passivos + PL:</strong> R$ <span id="res-passivos-pl">0.00</span></p>
+                <p><strong>Diferença:</strong> R$ <span id="res-diferenca">0.00</span></p>
+            </div>
+            <div id="status-mensagem" class="status-box"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
