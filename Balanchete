@@ -1,0 +1,73 @@
+// Credenciais de Administrador Fictícias (Apenas para demonstração local)
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "admin123";
+
+// Elementos da Interface
+const loginContainer = document.getElementById('login-container');
+const appContainer = document.getElementById('app-container');
+const loginForm = document.getElementById('login-form');
+const loginError = document.getElementById('login-error');
+const btnLogout = document.getElementById('btn-logout');
+const btnCalcular = document.getElementById('btn-calcular');
+
+// Lógica de Login
+loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+
+    if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        // Sucesso: Esconde login e mostra o app
+        loginContainer.classList.add('hidden');
+        appContainer.classList.remove('hidden');
+        loginError.textContent = "";
+        loginForm.reset();
+    } else {
+        // Erro
+        loginError.textContent = "Usuário ou senha incorretos!";
+    }
+});
+
+// Lógica de Logout
+btnLogout.addEventListener('click', function() {
+    appContainer.classList.add('hidden');
+    loginContainer.classList.remove('hidden');
+    document.getElementById('resultado-balanco').classList.add('hidden');
+});
+
+// Lógica do Balanço Patrimonial
+btnCalcular.addEventListener('click', function() {
+    // Captura dos valores do Ativo
+    const ativoCirc = parseFloat(document.getElementById('ativo-circulante').value) || 0;
+    const ativoNaoCirc = parseFloat(document.getElementById('ativo-nao-circulante').value) || 0;
+    const totalAtivos = ativoCirc + ativoNaoCirc;
+
+    // Captura dos valores do Passivo e PL
+    const passivoCirc = parseFloat(document.getElementById('passivo-circulante').value) || 0;
+    const passivoNaoCirc = parseFloat(document.getElementById('passivo-nao-circulante').value) || 0;
+    const patrimonioLiquido = parseFloat(document.getElementById('patrimonio-liquido').value) || 0;
+    const totalPassivoPL = passivoCirc + passivoNaoCirc + patrimonioLiquido;
+
+    // Cálculos de conferência
+    const diferenca = totalAtivos - totalPassivoPL;
+
+    // Atualizar a tela com os resultados
+    document.getElementById('res-ativos').textContent = totalAtivos.toFixed(2);
+    document.getElementById('res-passivos-pl').textContent = totalPassivoPL.toFixed(2);
+    document.getElementById('res-diferenca').textContent = Math.abs(diferenca).toFixed(2);
+
+    const statusBox = document.getElementById('status-mensagem');
+    
+    // Regra de ouro da contabilidade: Ativo = Passivo + Patrimônio Líquido
+    if (diferenca === 0) {
+        statusBox.textContent = "Balanço Equilibrado! Os Ativos batem com as Obrigações e PL.";
+        statusBox.className = "status-box sucesso";
+    } else {
+        statusBox.textContent = "Balanço Desequilibrado! Verifique os valores inseridos.";
+        statusBox.className = "status-box erro";
+    }
+
+    // Mostra a seção de resultados
+    document.getElementById('resultado-balanco').classList.remove('hidden');
+});
